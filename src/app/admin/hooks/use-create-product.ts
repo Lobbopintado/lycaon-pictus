@@ -1,11 +1,11 @@
-import { Product } from '@/consts/types'
+import { createProduct } from '@/consts/types'
 import { db, storage } from '@/services/config'
 import { addDoc, collection } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import toast from 'react-hot-toast'
 
 export const useCreateProduct = () => {
-  const createProduct = async (product: Product) => {
+  const createProduct = async (product: createProduct) => {
     const storageRef = ref(storage, 'images/' + product.image.name)
     const uploadTask = uploadBytesResumable(storageRef, product.image)
 

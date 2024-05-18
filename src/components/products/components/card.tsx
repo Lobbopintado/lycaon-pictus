@@ -38,9 +38,9 @@ export const Card = ({ product }: ProductProps) => {
 
   return (
     <div className='bg-white shadow-md rounded-md w-64 overflow-hidden'>
-      <img src={product.image} width={256} height={256} alt={product.name} className='w-64 h-64 object-cover' />
+      <img src={product.image.url} width={256} height={256} alt={product.image.name} className='w-64 h-64 object-cover' />
       <div className='px-5'>
-        <h3 className='text-xl font-jost font-bold mt-4'>{product.name}</h3>
+        <h3 className='text-xl font-jost font-bold mt-4'>{product.title}</h3>
         <p className='text-primary-200 mt-2'>${product.price}</p>
         <p className='text-primary-300 mt-2 mb-4'>{product.description}</p>
       </div>

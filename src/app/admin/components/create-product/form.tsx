@@ -1,6 +1,6 @@
 'use client'
 import { CATEGORY } from '@/consts/consts'
-import { Product } from '@/consts/types'
+import { createProduct } from '@/consts/types'
 import React, { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { useCreateProduct } from '../../hooks/use-create-product'
@@ -14,7 +14,7 @@ export const CreateProductForm = () => {
     e.preventDefault()
     if (!formRef.current) return
     const formData = new FormData(formRef.current)
-    const product: Product = {
+    const product: createProduct = {
       title: formData.get('title') as string,
       price: Number(formData.get('price')),
       discountPrice: Number(formData.get('discountPrice')),
