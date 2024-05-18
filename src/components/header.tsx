@@ -9,9 +9,9 @@ export const Header = () => {
 
   return (
     <header className='relative w-full xl:px-0 m-auto py-10 flex justify-between md:justify-around items-center'>
-      <img src='/header.jpeg' alt='Logo' className='w-full h-full absolute top-0 object-cover z-[-1]' />
+      <img src='/header.jpg' alt='Logo' className='w-full h-full absolute top-0 object-cover z-[-1]' />
       <a href='/' className='pl-10 md:pl-0'>
-        Logo
+        <img src='/logo.png' alt='Logo' className='w-32 h-32' />
       </a>
 
       <nav className='hidden flex-row gap-6 md:flex'>

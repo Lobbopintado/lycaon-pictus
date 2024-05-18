@@ -46,7 +46,8 @@ export const useCreateProduct = () => {
             stock: product.stock,
             discountPrice: product.discountPrice,
             reference: product.reference,
-            createdAt: product.createdAt
+            createdAt: product.createdAt,
+            category: product.category
           })
           toast.success('Producto creado con éxito')
         })

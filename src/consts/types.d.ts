@@ -8,4 +8,5 @@ export type Product = {
     discountPrice: number
     reference: string
     createdAt: Date
+    category: string
   }

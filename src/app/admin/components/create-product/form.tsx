@@ -1,4 +1,5 @@
 'use client'
+import { CATEGORY } from '@/consts/consts'
 import { Product } from '@/consts/types'
 import React, { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
@@ -21,7 +22,8 @@ export const CreateProductForm = () => {
       stock: Number(formData.get('stock')),
       description: formData.get('description') as string,
       image: formData.get('file') as File,
-      createdAt: new Date()
+      createdAt: new Date(),
+      category: formData.get('category') as string
     }
     createProduct(product)
   }
@@ -43,15 +45,6 @@ export const CreateProductForm = () => {
         reverseOrder={false}
       />
       <form className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-screen border-none rounded-md' ref={formRef} onSubmit={handleSubmit}>
-        <input type='text' name='title' placeholder='Nombre del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-        <div className='flex gap-5 w-full'>
-          <input type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-          <input type='number' name='discountPrice' placeholder='Precio con descuento' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-        </div>
-        <div className='flex gap-5 w-full'>
-          <input type='text' name='reference' placeholder='Referencia' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-          <input type='number' name='stock' placeholder='Stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-        </div>
         <div>
           {
             image
@@ -66,6 +59,22 @@ export const CreateProductForm = () => {
                 )
           }
         </div>
+        <input type='text' name='title' placeholder='Nombre del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+        <div className='flex gap-5 w-full'>
+          <input type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+          <input type='number' name='discountPrice' placeholder='Precio con descuento' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+        </div>
+        <div className='flex gap-5 w-full'>
+          <input type='text' name='reference' placeholder='Referencia' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+          <input type='number' name='stock' placeholder='Stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+        </div>
+        <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full'>
+          {
+            CATEGORY.map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))
+          }
+        </select>
         <textarea rows={10} name='description' placeholder='Descripción del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
         <button type='submit' className='bg-orange-200 rounded-md px-3 py-2  font-bold'>Crear producto</button>
       </form>
