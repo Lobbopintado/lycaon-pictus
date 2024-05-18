@@ -12,17 +12,17 @@ export type createProduct = {
   }
 
 export type Product = {
-  title: 'string',
+  title: string
   image: {
-    name: 'string',
-    url: 'string'
+    name: string
+    url: string
   },
-  price: 'number',
-  description: 'string',
-  id: 'string',
-  stock: 'number',
-  discountPrice: 'number',
-  reference: 'string',
-  createdAt: 'Date',
-  category: 'string'
+  price: number
+  description: string
+  id: string
+  stock: number
+  discountPrice: number
+  reference: string
+  createdAt: Date
+  category: string
 }

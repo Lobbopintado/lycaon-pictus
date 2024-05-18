@@ -1,44 +1,49 @@
-export const PRODUCTS = [
+import { Product } from '@/consts/types'
+
+export const PRODUCTS: Product[] = [
   {
-    id: 1,
-    name: 'Producto 1',
+    title: 'Zapatos',
+    image: {
+      name: 'zapatos.jpg',
+      url: 'https://images.unsplash.com/photo-1612835977531-4a6f2f6a1d5f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+    },
+    price: 150,
+    description: 'Zapatos de moda',
+    id: '1',
+    stock: 10,
+    discountPrice: 100,
+    reference: 'ZP-001',
+    createdAt: new Date(),
+    category: 'Calzado'
+  },
+  {
+    title: 'Camisa',
+    image: {
+      name: 'camisa.jpg',
+      url: 'https://images.unsplash.com/photo-1612835977531-4a6f2f6a1d5f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+    },
     price: 100,
-    description: 'Descripción del producto 1',
-    image: 'https://via.placeholder.com/150'
+    description: 'Camisa de moda',
+    id: '2',
+    stock: 10,
+    discountPrice: 80,
+    reference: 'CM-001',
+    createdAt: new Date(),
+    category: 'Ropa'
   },
   {
-    id: 2,
-    name: 'Producto 2',
-    price: 200,
-    description: 'Descripción del producto 2',
-    image: 'https://via.placeholder.com/150'
-  },
-  {
-    id: 3,
-    name: 'Producto 3',
-    price: 300,
-    description: 'Descripción del producto 3',
-    image: 'https://via.placeholder.com/150'
-  },
-  {
-    id: 4,
-    name: 'Producto 4',
-    price: 400,
-    description: 'Descripción del producto 4',
-    image: 'https://via.placeholder.com/150'
-  },
-  {
-    id: 5,
-    name: 'Producto 5',
-    price: 500,
-    description: 'Descripción del producto 5',
-    image: 'https://via.placeholder.com/150'
-  },
-  {
-    id: 6,
-    name: 'Producto 6',
-    price: 600,
-    description: 'Descripción del producto 6',
-    image: 'https://via.placeholder.com/150'
+    title: 'Pantalón',
+    image: {
+      name: 'pantalon.jpg',
+      url: 'https://images.unsplash.com/photo-1612835977531-4a6f2f6a1d5f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+    },
+    price: 120,
+    description: 'Pantalón de moda',
+    id: '3',
+    stock: 10,
+    discountPrice: 90,
+    reference: 'PT-001',
+    createdAt: new Date(),
+    category: 'Ropa'
   }
 ]
