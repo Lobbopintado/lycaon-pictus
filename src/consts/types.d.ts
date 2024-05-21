@@ -1,3 +1,5 @@
+export type Category = 'all' | 'pentilo' | 'amilo' | 'propilo' | 'mixtos' | 'multi gel remover' | '1.4-butandiol'
+
 export type createProduct = {
     title: string
     image: File
@@ -8,7 +10,7 @@ export type createProduct = {
     discountPrice: number
     reference: string
     createdAt: Date
-    category: string
+    category: Category
   }
 
 export type Product = {
@@ -24,5 +26,5 @@ export type Product = {
   discountPrice: number
   reference: string
   createdAt: Date
-  category: string
+  category: Category
 }

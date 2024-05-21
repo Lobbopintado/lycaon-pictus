@@ -1,6 +1,6 @@
 'use client'
 import { CATEGORY } from '@/consts/consts'
-import { createProduct } from '@/consts/types'
+import { Category, createProduct } from '@/consts/types'
 import React, { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { useCreateProduct } from '../../hooks/use-create-product'
@@ -9,6 +9,7 @@ export const CreateProductForm = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const { createProduct } = useCreateProduct()
   const [image, setImage] = useState('')
+  const [file, setFile] = useState<File | null>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,9 +22,9 @@ export const CreateProductForm = () => {
       reference: formData.get('reference') as string,
       stock: Number(formData.get('stock')),
       description: formData.get('description') as string,
-      image: formData.get('file') as File,
+      image: file as File,
       createdAt: new Date(),
-      category: formData.get('category') as string
+      category: formData.get('category') as Category
     }
     createProduct(product)
   }
@@ -31,6 +32,7 @@ export const CreateProductForm = () => {
   const previewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+    setFile(file)
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = () => {
@@ -54,7 +56,7 @@ export const CreateProductForm = () => {
               : (
                 <label htmlFor='file' className='w-64 h-64 flex justify-center items-center shadow-md rounded-md border-gray-200 border cursor-pointer'>
                   Imagen
-                  <input type='file' id='file' name='file' className='hidden' accept='image/*' onChange={previewImage} />
+                  <input type='file' id='file' name='image' className='hidden' accept='image/*' onChange={previewImage} />
                 </label>
                 )
           }
