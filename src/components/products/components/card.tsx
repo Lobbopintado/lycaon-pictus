@@ -38,15 +38,15 @@ export const Card = ({ product }: ProductProps) => {
     }
   }, [product.id, cart, setCart])
 
-  if (category !== 'all' && product.category !== category) return null
+  if (category !== 'todos' && product.category !== category) return null
 
   return (
-    <div className='bg-white shadow-md rounded-md w-64 overflow-hidden flex flex-col justify-between'>
+    <div className='bg-white shadow-md rounded-md w-64 overflow-hidden flex flex-col justify-between h-96'>
       <img src={product.image.url} width={256} height={256} alt={product.image.name} className='w-64 h-64 object-cover' />
-      <h2 className='text-xl font-bold'>{product.title}</h2>
-      <p className='text-gray-500 truncate'>{product.description}</p>
-      <p className={`text-gray-500 ${product.discountPrice && 'line-through'}`}>{product.price}€</p>
-      {product.discountPrice > 0 && <p className='text-gray-500'>{product.discountPrice}€</p>}
+      <h2 className='text-xl font-bold truncate px-3'>{product.title}</h2>
+      <p className='text-gray-500 truncate px-3'>{product.description}</p>
+      <p className={`text-gray-500 px-3 ${product.discountPrice && 'line-through'}`}>{product.price}€</p>
+      {product.discountPrice > 0 && <p className='text-gray-500 px-3'>{product.discountPrice}€</p>}
       {
         exist
           ? <button onClick={removeFromCart} className='w-full bg-red-200 text-white py-2'>Eliminar del carrito</button>

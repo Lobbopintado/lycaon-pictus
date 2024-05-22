@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 export const Header = () => {
   const [toggled, setToggled] = useState(false)
-
   const linkStyle = 'text-xl leading-6 font-jost text-primary-200'
 
   return (

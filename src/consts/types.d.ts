@@ -1,4 +1,4 @@
-export type Category = 'all' | 'pentilo' | 'amilo' | 'propilo' | 'mixtos' | 'multi gel remover' | '1.4-butandiol'
+export type Category = 'todos' | 'pentilo' | 'amilo' | 'propilo' | 'mixtos' | 'multi gel remover' | '1.4-butandiol'
 
 export type createProduct = {
     title: string

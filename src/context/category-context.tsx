@@ -11,7 +11,7 @@ interface CartProviderProps {
 }
 
 export const CategoryProvider = ({ children }: CartProviderProps) => {
-  const [category, setCategory] = useState<Category>('all')
+  const [category, setCategory] = useState<Category>('todos')
 
   return (
     <CategoryContext.Provider value={{ category, setCategory }}>
