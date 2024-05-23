@@ -24,7 +24,9 @@ export const CreateProductForm = () => {
       description: formData.get('description') as string,
       image: file as File,
       createdAt: new Date(),
-      category: formData.get('category') as Category
+      category: formData.get('category') as Category,
+      stars: Number(formData.get('stars')),
+      ml: Number(formData.get('ml'))
     }
     createProduct(product)
   }
@@ -70,7 +72,17 @@ export const CreateProductForm = () => {
           <input type='text' name='reference' placeholder='Referencia' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           <input type='number' name='stock' placeholder='Stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
         </div>
+        <input type='number' name='ml' placeholder='Mililitros' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+        <select name='stars' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full'>
+          <option>Número de estrellas</option>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+        </select>
         <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full'>
+          <option>Categoría</option>
           {
             CATEGORY.map((category) => (
               <option key={category} value={category}>{category}</option>

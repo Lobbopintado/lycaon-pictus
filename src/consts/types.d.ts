@@ -11,6 +11,8 @@ export type createProduct = {
     reference: string
     createdAt: Date
     category: Category
+    stars: number
+    ml: number
   }
 
 export type Product = {
@@ -27,4 +29,6 @@ export type Product = {
   reference: string
   createdAt: Date
   category: Category
+  stars: number
+  ml:number
 }

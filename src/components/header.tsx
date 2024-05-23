@@ -8,9 +8,10 @@ export const Header = () => {
 
   return (
     <header className='relative w-full xl:px-0 m-auto py-10 flex justify-between md:justify-around items-center'>
-      <img src='/header.jpg' alt='Logo' className='w-full h-full absolute top-0 object-cover z-[-1]' />
-      <a href='/' className='pl-10 md:pl-0'>
-        <img src='/logo.png' alt='Logo' className='w-32 h-32' />
+      <img src='/header.jfif' alt='Logo' className='w-full h-full absolute top-0 object-cover z-[-1]' />
+      <a href='/' className='pl-10 md:pl-0 flex flex-col gap-3'>
+        <img src='/logo.png' alt='Logo' className='w-32 h-44' />
+        <span className='text-blue-400 text-xl font-semibold font-jost'>Venta de productos de limpieza profesional</span>
       </a>
 
       <nav className='hidden flex-row gap-6 md:flex'>
@@ -34,11 +35,11 @@ export const Header = () => {
       >
         <motion.span
           animate={{ rotateZ: toggled ? 45 : 0, y: toggled ? 8 : 0 }}
-          className='block h-0.5 w-8 bg-black'
+          className='block h-0.5 w-8 bg-white'
         />
         <motion.span
           animate={{ width: toggled ? 0 : 24 }}
-          className='block h-0.5 w-6 bg-black'
+          className='block h-0.5 w-6 bg-white'
         />
         <motion.span
           animate={{
@@ -46,7 +47,7 @@ export const Header = () => {
             y: toggled ? -8 : 0,
             width: toggled ? 32 : 16
           }}
-          className='block h-0.5 w-4 bg-black'
+          className='block h-0.5 w-4 bg-white'
         />
       </button>
 
