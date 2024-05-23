@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
@@ -9,10 +10,10 @@ export const Header = () => {
   return (
     <header className='relative w-full xl:px-0 m-auto py-5 flex justify-between md:justify-around items-center md:shadow-md'>
       <img src='/header.jpg' alt='Logo' className='block md:hidden w-full h-full absolute top-0 object-cover z-[-1]' />
-      <img src='/header.jfif' alt='Logo' className='hidden w-full h-full absolute top-0 object-cover z-[-1] md:block' />
-      <a href='/' className='pl-10 md:pl-0 flex flex-col gap-3'>
-        <img src='/logo.png' alt='Logo' className='w-24 h-32' />
-        <span className='text-[#168cec] text-lg font-semibold font-jost flex flex-col'>
+      <img src='/header.jfif' alt='Logo' className='hidden w-full h-full absolute top-0 object-fill z-[-1] md:block' />
+      <a href='/' className='pl-5 md:pl-0 flex flex-col gap-3'>
+        <img src='/logo.png' alt='Logo' className='w-20 h-28' />
+        <span className='text-[#168cec] text-base font-semibold font-jost flex flex-col'>
           <p>Venta de productos de</p>
           <p className='pl-2'>limpieza profesional</p>
         </span>
