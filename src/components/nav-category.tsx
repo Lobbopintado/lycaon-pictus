@@ -30,7 +30,7 @@ export const NavCategory = () => {
       <div className='flex md:hidden justify-end w-full'>
         <button
           onClick={() => setToggled(!toggled)}
-          className='flex justify-center items-center gap-2 cursor-pointer p-5 text-right w-full text-blue-300 font-semibold'
+          className='flex justify-center items-center gap-2 cursor-pointer p-5 text-right w-full text-blue-500 font-semibold'
         >
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className='font-bold'><path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M4 6l16 0' /><path d='M4 12l16 0' /><path d='M4 18l16 0' /></svg>
           Categorías

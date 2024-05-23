@@ -41,13 +41,15 @@ export const Card = ({ product }: ProductProps) => {
 
   if (category !== 'todos' && product.category !== category) return null
   return (
-    <div className='bg-white shadow-md rounded-md w-64 overflow-hidden flex flex-col justify-between h-[420px]'>
+    <div className='bg-white shadow-md rounded-md w-64 overflow-hidden flex flex-col justify-between h-[400px]'>
       <Link href={`productos/${id}`} className='h-full flex flex-col justify-between'>
         <img src={product.image.url} width={256} height={256} alt={product.image.name} className='w-64 h-64 object-cover' />
-        <h2 className='text-xl font-bold truncate px-3 pt-3'>{product.title} {product.ml}ml</h2>
-        <div className='px-3 flex gap-3'>
-          <p className={`text-gray-500 ${product.discountPrice && 'line-through'}`}>{product.price}€</p>
-          {product.discountPrice > 0 && <p className='text-gray-500 font-bold'>{product.discountPrice}€</p>}
+        <div className='px-3 flex items-start gap-3'>
+          <h2 className='font-bold px-3'>{product.title} {product.ml}ml</h2>
+          <div>
+            {product.discountPrice > 0 && <p className='text-gray-500 font-bold'>{product.discountPrice}€</p>}
+            <p className={`text-gray-500 ${product.discountPrice && 'line-through'}`}>{product.price}€</p>
+          </div>
         </div>
         <p className='pb-3 px-3'>
           {'⭐'.repeat(product.stars)}

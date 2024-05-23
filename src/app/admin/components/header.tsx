@@ -8,6 +8,11 @@ export const Header = ({ setIsOpen, isOpen }: HeaderProps) => {
     <header>
       <nav className='flex justify-center p-5'>
         <ul className='flex justify-center items-center gap-5 bg-sky-300 rounded-md p-3'>
+          <li className={`${isOpen === 'products' && 'text-white '} rounded-md p-1`}>
+            <button onClick={() => setIsOpen('products')}>
+              Productos
+            </button>
+          </li>
           <li className={`${isOpen === 'create-product' && 'text-white '} rounded-md p-1`}>
             <button onClick={() => setIsOpen('create-product')}>
               Crear producto

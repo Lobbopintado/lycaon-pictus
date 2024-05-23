@@ -4,14 +4,14 @@ import { useState } from 'react'
 
 export const Header = () => {
   const [toggled, setToggled] = useState(false)
-  const linkStyle = 'text-xl leading-6 font-jost text-primary-200'
+  const linkStyle = 'text-xl leading-6 font-jost text-black md:text-white'
 
   return (
-    <header className='relative w-full xl:px-0 m-auto py-10 flex justify-between md:justify-around items-center'>
-      <img src='/header.jfif' alt='Logo' className='w-full h-full absolute top-0 object-cover z-[-1]' />
+    <header className='relative w-full xl:px-0 m-auto py-5 flex justify-between md:justify-around items-center md:shadow-md'>
+      <img src='/header.jfif' alt='Logo' className='w-full h-full absolute top-0  z-[-1]' />
       <a href='/' className='pl-10 md:pl-0 flex flex-col gap-3'>
-        <img src='/logo.png' alt='Logo' className='w-32 h-44' />
-        <span className='text-blue-400 text-xl font-semibold font-jost'>Venta de productos de limpieza profesional</span>
+        <img src='/logo.png' alt='Logo' className='w-24 h-32' />
+        <span className='text-blue-600 text-lg font-semibold font-jost'>Venta de productos de limpieza profesional</span>
       </a>
 
       <nav className='hidden flex-row gap-6 md:flex'>
