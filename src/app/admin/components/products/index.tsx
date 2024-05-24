@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { useGetProducts } from '@/components/products/hooks/use-get-products'
+import Link from 'next/link'
 
 export const Products = () => {
   const { products } = useGetProducts()
@@ -17,7 +19,7 @@ export const Products = () => {
             <img src={product.image.url} alt={product.image.name} className='size-12 object-cover' />
             <h2>{product.title}</h2>
             <p>{product.price}</p>
-            <button>Editar</button>
+            <Link href={`/admin/edit/${product.id}`}>Editar</Link>
             <button>Eliminar</button>
           </li>
         ))}

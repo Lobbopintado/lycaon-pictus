@@ -23,7 +23,7 @@ export type Product = {
   },
   price: number
   description: string
-  id: string
+  id?: string
   stock: number
   discountPrice: number
   reference: string
