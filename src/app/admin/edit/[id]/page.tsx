@@ -12,6 +12,7 @@ import { updateProduct } from '../hooks/update-product'
 
 const EditPublication = () => {
   const { id } = useParams<{ id: string }>()
+  const [disabled, setDisabled] = useState(false)
   const router = useRouter()
   const { product } = useGetOneProduct(id)
   const [image, setImage] = useState({
@@ -32,6 +33,7 @@ const EditPublication = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formRef.current) return
+    setDisabled(true)
     const formData = new FormData(formRef.current)
     const product: Product = {
       title: formData.get('title') as string,
@@ -52,7 +54,9 @@ const EditPublication = () => {
     }
     updateProduct(product, id)
     toast.success('Producto actualizado correctamente')
-    router.push('/admin')
+    setTimeout(() => {
+      router.push('/admin')
+    }, 2000)
   }
 
   const previewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,7 +173,7 @@ const EditPublication = () => {
           <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.category}>
             {
             CATEGORY.map((category) => (
-              <option key={category} value={category} selected={product?.category === category}>{category}</option>
+              <option key={category} value={category} selected={product?.category === category} hidden={category === 'todos'}>{category}</option>
             ))
           }
           </select>
@@ -178,7 +182,7 @@ const EditPublication = () => {
           Descripción
           <textarea rows={10} name='description' placeholder='Descripción del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.description} />
         </label>
-        <button type='submit' className='bg-orange-200 rounded-md px-3 py-2  font-bold'>Actualizar producto</button>
+        <button type='submit' className='bg-orange-200 rounded-md px-3 py-2  font-bold' disabled={disabled}>Actualizar producto</button>
       </form>
     </div>
   )
