@@ -13,6 +13,7 @@ export type createProduct = {
     category: Category
     stars: number
     ml: number
+    featured: number
   }
 
 export type Product = {
@@ -31,4 +32,5 @@ export type Product = {
   category: Category
   stars: number
   ml:number
+  featured: number
 }

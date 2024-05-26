@@ -49,7 +49,8 @@ export const useCreateProduct = () => {
             createdAt: product.createdAt,
             category: product.category,
             stars: product.stars,
-            ml: product.ml
+            ml: product.ml,
+            featured: product.featured
           })
           toast.success('Producto creado con éxito')
         })

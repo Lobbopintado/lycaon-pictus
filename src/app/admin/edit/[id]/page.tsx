@@ -1,23 +1,33 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import { useGetOneProduct } from '@/components/products/hooks/use-get-one-product'
 import { CATEGORY } from '@/consts/consts'
 import { Category, Product } from '@/consts/types'
 import { storage } from '@/services/config'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { useParams } from 'next/navigation'
-import React, { useRef, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { updateProduct } from '../hooks/update-product'
 
 const EditPublication = () => {
   const { id } = useParams<{ id: string }>()
+  const router = useRouter()
   const { product } = useGetOneProduct(id)
   const [image, setImage] = useState({
-    name: product?.image.name,
-    url: product?.image.url
+    name: '',
+    url: ''
 
   })
   const formRef = useRef<HTMLFormElement>(null)
+
+  useEffect(() => {
+    if (!product) return
+    setImage({
+      name: product.image.name,
+      url: product.image.url
+    })
+  }, [product])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,9 +47,12 @@ const EditPublication = () => {
       createdAt: new Date(),
       category: formData.get('category') as Category,
       stars: Number(formData.get('stars')),
-      ml: Number(formData.get('ml'))
+      ml: Number(formData.get('ml')),
+      featured: Number(formData.get('featured'))
     }
     updateProduct(product, id)
+    toast.success('Producto actualizado correctamente')
+    router.push('/admin')
   }
 
   const previewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,14 +101,14 @@ const EditPublication = () => {
         position='top-center'
         reverseOrder={false}
       />
-      <form className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-screen border-none rounded-md' ref={formRef} onSubmit={handleSubmit}>
+      <form className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-screen border-none rounded-md mt-5' ref={formRef} onSubmit={handleSubmit}>
         <div>
           {
             image.url
               ? (
                 <div>
                   <img src={image.url} alt='preview' className='w-64 h-64 object-cover rounded-md shadow-md' />
-                  <button onClick={() => setImage({ url: '', name: '' })} className='bg-red-400 px-3 py-2 rounded-md mt-2'>Eliminar imagen</button>
+                  <button onClick={() => setImage({ url: '', name: '' })} className='w-full bg-red-400 px-3 py-2 rounded-md mt-2'>Eliminar imagen</button>
                 </div>
                 )
               : (
@@ -106,33 +119,65 @@ const EditPublication = () => {
                 )
           }
         </div>
-        <input type='text' name='title' placeholder='Nombre del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.title} />
-        <div className='flex gap-5 w-full'>
-          <input type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.price} />
-          <input type='number' name='discountPrice' placeholder='Precio con descuento' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.discountPrice} />
+        <label htmlFor='title' className='w-full text-lg font-bold'>
+          Nombre del producto
+          <input type='text' name='title' placeholder='Nombre del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.title} />
+        </label>
+        <div className='flex gap-5 w-full flex-col md:flex-row'>
+          <label htmlFor='price' className='w-full text-lg font-bold'>
+            Precio
+            <input type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.price} />
+          </label>
+          <label htmlFor='discountPrice' className='w-full text-lg font-bold'>
+            Precio con descuento
+            <input type='number' name='discountPrice' placeholder='Precio con descuento' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.discountPrice} />
+          </label>
         </div>
-        <div className='flex gap-5 w-full'>
-          <input type='text' name='reference' placeholder='Referencia' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.reference} />
-          <input type='number' name='stock' placeholder='Stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.stock} />
+        <div className='flex gap-5 w-full flex-col md:flex-row'>
+          <label htmlFor='reference' className='w-full text-lg font-bold'>
+            Referencia
+            <input type='text' name='reference' placeholder='Referencia' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.reference} />
+          </label>
+          <label htmlFor='stock' className='w-full text-lg font-bold'>
+            Stock
+            <input type='number' name='stock' placeholder='Stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.stock} />
+          </label>
         </div>
-        <input type='number' name='ml' placeholder='Mililitros' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.ml} />
-        <select name='stars' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.stars}>
-          <option>Número de estrellas</option>
-          <option defaultValue='1'>1</option>
-          <option defaultValue='2'>2</option>
-          <option defaultValue='3'>3</option>
-          <option defaultValue='4'>4</option>
-          <option defaultValue='5'>5</option>
-        </select>
-        <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.category}>
-          <option>Categoría</option>
-          {
+        <label htmlFor='ml' className='w-full text-lg font-bold'>
+          Mililitros
+          <input type='number' name='ml' placeholder='Mililitros' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.ml} />
+        </label>
+        <label htmlFor='featured' className='w-full text-lg font-bold'>
+          Destacado
+          <select name='featured' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full'>
+            <option value='1' selected={product?.featured === 1}>Sí</option>
+            <option value='0' selected={product?.featured === 0}>No</option>
+          </select>
+        </label>
+        <label htmlFor='stars' className='w-full text-lg font-bold'>
+          Estrellas
+          <select name='stars' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.stars.toString()}>
+            <option value='1' selected={product?.stars === 1}>1</option>
+            <option value='2' selected={product?.stars === 2}>2</option>
+            <option value='3' selected={product?.stars === 3}>3</option>
+            <option value='4' selected={product?.stars === 4}>4</option>
+            <option value='5' selected={product?.stars === 5}>5</option>
+          </select>
+        </label>
+        <label htmlFor='category' className='w-full text-lg font-bold'>
+          Categoría
+          <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.category}>
+            {
             CATEGORY.map((category) => (
-              <option key={category} defaultValue={category}>{category}</option>
+              <option key={category} value={category} selected={product?.category === category}>{category}</option>
             ))
           }
-        </select>
-        <textarea rows={10} name='description' placeholder='Descripción del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.description} />
+          </select>
+        </label>
+        <label htmlFor='description' className='w-full text-lg font-bold'>
+          Descripción
+          <textarea rows={10} name='description' placeholder='Descripción del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.description} />
+        </label>
         <button type='submit' className='bg-orange-200 rounded-md px-3 py-2  font-bold'>Actualizar producto</button>
       </form>
     </div>

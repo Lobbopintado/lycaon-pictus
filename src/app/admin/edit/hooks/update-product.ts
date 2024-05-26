@@ -18,6 +18,7 @@ export const updateProduct = async (product: Product, id: string) => {
     createdAt: product.createdAt,
     category: product.category,
     stars: product.stars,
-    ml: product.ml
+    ml: product.ml,
+    featured: product.featured
   })
 }
