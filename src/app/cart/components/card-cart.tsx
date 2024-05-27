@@ -13,22 +13,25 @@ export const CardCart = ({ product, setReFetch, setTotal }: {product: Product, s
     localStorage.setItem('cart', JSON.stringify(newCart))
     setReFetch((prev: boolean) => !prev)
     setCart(newCart)
+    setTotal((prev: number) => prev - ((product.discountPrice ? (product.discountPrice * counter) : (product.price * counter))))
   }
 
   const handleCounter = (inc: string) => {
     if (inc === 'inc') {
       setCounter((prev: number) => ++prev)
+      setTotal((prev: number) => prev + (product.discountPrice ? product.discountPrice : product.price))
     } else {
       if (counter === 1) return
       setCounter((prev: number) => --prev)
+      setTotal((prev: number) => prev - (product.discountPrice ? product.discountPrice : product.price))
     }
   }
 
   useEffect(() => {
     if (product.discountPrice) {
-      setTotal((prev: number) => prev + (product.discountPrice))
+      setTotal((prev: number) => prev + (product.discountPrice * counter))
     } else {
-      setTotal((prev: number) => prev + (product.price))
+      setTotal((prev: number) => prev + (product.price * counter))
     }
   }, [])
   return (

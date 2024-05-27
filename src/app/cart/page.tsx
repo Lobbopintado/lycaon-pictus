@@ -7,6 +7,7 @@ import { useGetProductsOfCart } from './hooks/use-get-products-of-cart'
 export default function Cart () {
   const { products, setReFetch } = useGetProductsOfCart()
   const [total, setTotal] = useState(0)
+  const iva = 0.21
   return (
     <section className='bg-white py-8 antialiased md:py-16'>
       <div className='mx-auto max-w-screen-xl px-4 2xl:px-0'>
@@ -28,23 +29,14 @@ export default function Cart () {
               <div className='space-y-4'>
                 <div className='space-y-2'>
                   <dl className='flex items-center justify-between gap-4'>
-                    <dt className='text-base font-normal text-gray-500'>Original price</dt>
-                    <dd className='text-base font-medium text-gray-900'>{total}€</dd>
+                    <dt className='text-base font-normal text-gray-500'>Precio
+                    </dt>
+                    <dd className='text-base font-medium text-gray-900'>{total - (total * iva)}€</dd>
                   </dl>
 
                   <dl className='flex items-center justify-between gap-4'>
-                    <dt className='text-base font-normal text-gray-500'>Savings</dt>
-                    <dd className='text-base font-medium text-green-600'>-$299.00</dd>
-                  </dl>
-
-                  <dl className='flex items-center justify-between gap-4'>
-                    <dt className='text-base font-normal text-gray-500'>Store Pickup</dt>
-                    <dd className='text-base font-medium text-gray-900'>$99</dd>
-                  </dl>
-
-                  <dl className='flex items-center justify-between gap-4'>
-                    <dt className='text-base font-normal text-gray-500'>Tax</dt>
-                    <dd className='text-base font-medium text-gray-900'>$799</dd>
+                    <dt className='text-base font-normal text-gray-500'>IVA (21%)</dt>
+                    <dd className='text-base font-medium text-gray-900'>{(total - (total / 1.21)).toFixed(2)}€</dd>
                   </dl>
                 </div>
 
