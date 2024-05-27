@@ -2,7 +2,6 @@
 'use client'
 import { Product } from '@/consts/types'
 import { useCartContext } from '@/context/cart-context'
-import { useCategoryContext } from '@/context/category-context'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -14,7 +13,6 @@ export const Card = ({ product }: ProductProps) => {
   const id = product.id
   const { cart, setCart } = useCartContext()
   const [exist, setExist] = useState(false)
-  const { category } = useCategoryContext()
 
   const addToCart = () => {
     localStorage.setItem('cart', JSON.stringify([...JSON.parse(localStorage.getItem('cart') || '[]'), { id }]))
@@ -37,7 +35,6 @@ export const Card = ({ product }: ProductProps) => {
     }
   }, [product.id, cart, setCart])
 
-  if (category !== 'todos' && product.category !== category) return null
   return (
     <div className='bg-white shadow-md rounded-md w-40 overflow-hidden flex flex-col justify-between'>
       <Link href={`productos/${id}`} className='h-full flex flex-col justify-between'>

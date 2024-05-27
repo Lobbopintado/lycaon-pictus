@@ -115,7 +115,7 @@ export const CreateProductForm = () => {
           <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full'>
             {
             CATEGORY.map((category) => (
-              <option key={category} value={category} hidden={category === 'todos'} selected={category === 'pentilo'}>{category}</option>
+              <option key={category.name} value={category.slug}>{category.name}</option>
             ))
           }
           </select>

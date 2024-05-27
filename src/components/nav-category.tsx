@@ -1,28 +1,22 @@
 'use client'
 import { CATEGORY } from '@/consts/consts'
-import { Category } from '@/consts/types'
-import { useCategoryContext } from '@/context/category-context'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 export const NavCategory = () => {
   const [toggled, setToggled] = useState(false)
-  const { setCategory, category } = useCategoryContext()
-  function capitalize (text: string) {
-    const firstLetter = text.charAt(0)
-    const rest = text.slice(1)
-    return firstLetter.toUpperCase() + rest
-  }
-
+  const pathname = usePathname()
   return (
     <>
       <ul className='hidden p-5 flex-wrap gap-1 justify-between w-screen md:w-2/3 md:flex'>
         {
         CATEGORY.map((cat) => (
-          <li key={cat} className='p-2'>
-            <button onClick={() => setCategory(cat as Category)} className={`text-xl leading-6 font-jost text-primary-200 ${cat === category && 'border-b-4 border-solid border-black'}`}>
-              {capitalize(cat)}
-            </button>
+          <li key={cat.name} className='p-2'>
+            <Link href={`/categoria/${cat.slug}`} className={`text-xl leading-6 font-jost text-primary-200 ${cat.slug === pathname && 'border-b-4 border-solid border-black'}`}>
+              {cat.name}
+            </Link>
           </li>
         ))
       }
@@ -48,16 +42,13 @@ export const NavCategory = () => {
           </button>
           {
             CATEGORY.map((cat) => (
-              <li key={cat} className='p-2'>
-                <button
-                  onClick={() => {
-                    setCategory(cat as Category)
-                    setToggled(false)
-                  }}
-                  className={`text-xl font-jost list-none ${cat === category && 'border-b-4 border-solid border-black'}`}
+              <li key={cat.name} className='p-2'>
+                <Link
+                  href={`/categoria/${cat.slug}`}
+                  className={`text-xl font-jost list-none ${cat.slug === pathname && 'border-b-4 border-solid border-black'}`}
                 >
-                  {capitalize(cat)}
-                </button>
+                  {cat.name}
+                </Link>
               </li>
             ))
           }

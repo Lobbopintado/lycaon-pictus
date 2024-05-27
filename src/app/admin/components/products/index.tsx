@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useGetProducts } from '@/components/products/hooks/use-get-products'
+import { useGetProducts } from '@/hooks/use-get-products'
 import Link from 'next/link'
 
 export const Products = () => {

@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
-import { useGetOneProduct } from '@/components/products/hooks/use-get-one-product'
 import { CATEGORY } from '@/consts/consts'
 import { Category, Product } from '@/consts/types'
+import { useGetOneProduct } from '@/hooks/use-get-one-product'
 import { storage } from '@/services/config'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { useParams, useRouter } from 'next/navigation'
@@ -173,7 +173,7 @@ const EditPublication = () => {
           <select name='category' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.category}>
             {
             CATEGORY.map((category) => (
-              <option key={category} value={category} selected={product?.category === category} hidden={category === 'todos'}>{category}</option>
+              <option key={category.name} value={category.slug} selected={product?.category === category.slug}>{category.slug}</option>
             ))
           }
           </select>
