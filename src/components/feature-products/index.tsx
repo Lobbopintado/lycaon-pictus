@@ -5,6 +5,7 @@ import { useGetFeaturedProducts } from './hooks/useGetFeaturedProducts'
 
 export const Products = () => {
   const { products, loading } = useGetFeaturedProducts()
+  if (products.length === 0) return null
   return (
     <section className='w-full flex flex-col items-center justify-center'>
       <h2 className='text-3xl font-bold text-center p-5'>Productos destacados</h2>
