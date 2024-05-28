@@ -15,6 +15,7 @@ const EditPublication = () => {
   const [disabled, setDisabled] = useState(false)
   const router = useRouter()
   const { product } = useGetOneProduct(id)
+  const [price, setPrice] = useState(0)
   const [image, setImage] = useState({
     name: '',
     url: ''
@@ -29,6 +30,13 @@ const EditPublication = () => {
       url: product.image.url
     })
   }, [product])
+
+  const handlePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const price = Number(e.target.value)
+    if (isNaN(price)) return
+    if (price < 0) return
+    setPrice(price)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -130,7 +138,7 @@ const EditPublication = () => {
         <div className='flex gap-5 w-full flex-col md:flex-row'>
           <label htmlFor='price' className='w-full text-lg font-bold'>
             Precio
-            <input type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.price} />
+            <input onChange={(e) => handlePrice(e)} type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' defaultValue={product?.price} />
           </label>
           <label htmlFor='discountPrice' className='w-full text-lg font-bold'>
             Precio con descuento
