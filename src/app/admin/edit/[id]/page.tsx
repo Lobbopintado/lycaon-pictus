@@ -16,6 +16,7 @@ const EditPublication = () => {
   const router = useRouter()
   const { product } = useGetOneProduct(id)
   const [price, setPrice] = useState(0)
+  console.log(price)
   const [image, setImage] = useState({
     name: '',
     url: ''
