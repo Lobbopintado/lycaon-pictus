@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 export const useGetProducts = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const [reFetch, setReFetch] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -23,7 +24,7 @@ export const useGetProducts = () => {
       setProducts(ArrProducts)
       setLoading(false)
     })()
-  }, [])
+  }, [reFetch])
 
-  return { products, loading }
+  return { products, loading, setReFetch }
 }
