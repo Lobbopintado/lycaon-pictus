@@ -3,7 +3,7 @@ import { Product } from '@/consts/types'
 import { useCartContext } from '@/context/cart-context'
 import { useEffect, useState } from 'react'
 
-export const CardCart = ({ product, setReFetch, setTotal }: {product: Product, setReFetch: any, setTotal: any }) => {
+export const CardCart = ({ product, setReFetch, setTotal, setAllProducts }: {product: Product, setReFetch: any, setTotal: any, setAllProducts: any }) => {
   const { setCart } = useCartContext()
   const [counter, setCounter] = useState(1)
 
@@ -34,6 +34,30 @@ export const CardCart = ({ product, setReFetch, setTotal }: {product: Product, s
       setTotal((prev: number) => prev + (product.price * counter))
     }
   }, [])
+
+  useEffect(() => {
+    setAllProducts((prev: any) => {
+      if (prev.some((item: any) => item.id === product.id)) {
+        const newProducts = prev.map((item: any) => {
+          if (item.id === product.id) {
+            return {
+              ...item,
+              quantity: counter
+            }
+          }
+          return item
+        })
+        return newProducts
+      }
+      const newProduct = {
+        id: product.id,
+        title: product.title,
+        price: product.discountPrice ? product.discountPrice : product.price,
+        quantity: counter
+      }
+      return [...prev, newProduct]
+    })
+  }, [counter])
   return (
     <div key={product.title} className='rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6'>
       <div className='space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0'>
@@ -55,7 +79,7 @@ export const CardCart = ({ product, setReFetch, setTotal }: {product: Product, s
           </div>
           <div className='text-end md:order-4 md:w-32'>
             <p className='text-base font-bold text-gray-900'>
-              {product.discountPrice ? `${product.discountPrice * counter}€` : `${product.price * counter}€`}
+              {product.discountPrice ? `${(product.discountPrice * counter).toFixed(2)}€` : `${(product.price * counter).toFixed(2)}€`}
             </p>
           </div>
         </div>

@@ -8,10 +8,31 @@ export default function Cart () {
   const { products, setReFetch } = useGetProductsOfCart()
   const [total, setTotal] = useState(0)
   const [ivaOfTotal, setIvaOfTotal] = useState(0)
+  const [allProducts, setAllProducts] = useState([])
+  console.log(allProducts)
 
   useEffect(() => {
     setIvaOfTotal(total - (total / 1.21))
+    const query = new URLSearchParams(window.location.search)
+    if (query.get('success')) {
+      console.log('Order placed! You will receive an email confirmation.')
+    }
+
+    if (query.get('canceled')) {
+      console.log('Order canceled -- continue to shop around and checkout when you’re ready.')
+    }
   }, [total])
+
+  const handleClick = async () => {
+    const response = await fetch('/api/checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ products: allProducts })
+    })
+    console.log(response)
+  }
 
   return (
     <section className='bg-white py-8 antialiased md:py-16'>
@@ -22,7 +43,7 @@ export default function Cart () {
             <section className='space-y-6'>
               {
                 products?.map((product) => (
-                  <CardCart key={product.id} product={product} setReFetch={setReFetch} setTotal={setTotal} />
+                  <CardCart key={product.id} product={product} setReFetch={setReFetch} setTotal={setTotal} setAllProducts={setAllProducts} />
                 ))
               }
             </section>
@@ -51,8 +72,7 @@ export default function Cart () {
                 </dl>
               </div>
 
-              <a href='#' className='flex w-full items-center justify-center rounded-lg bg-green-400 px-5 py-2.5 text-sm font-medium text-black hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300'>Proceder con el pago</a>
-
+              <button onClick={handleClick} className='flex w-full items-center justify-center rounded-lg bg-green-400 px-5 py-2.5 text-sm font-medium text-black hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300'>Proceder con el pago</button>
               <div className='flex items-center justify-center gap-2'>
                 <span className='text-sm font-normal text-gray-500'> o </span>
                 <a href='#' title='' className='inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline'>
