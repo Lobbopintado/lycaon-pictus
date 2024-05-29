@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^3.4.1",
-    "cors": "^2.8.5",
     "firebase": "^10.11.1",
     "framer-motion": "^11.1.9",
     "next": "14.2.3",
