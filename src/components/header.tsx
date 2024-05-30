@@ -11,8 +11,8 @@ export const Header = () => {
     <header className='relative w-full xl:px-0 m-auto py-5 flex justify-between md:justify-around items-center md:shadow-md'>
       <img src='/header.jpg' alt='fondo' className='block md:hidden w-full h-full absolute top-0 object-cover z-[-1]' />
       <img src='/header.jfif' alt='fondo' className='hidden w-full h-full absolute top-0 object-fill z-[-1] md:block' />
-      <a href='/' className='pl-5 md:pl-0 flex flex-col items-center gap-3'>
-        <img src='/logo.png' alt='Logo' className='w-12 h-16' />
+      <a href='/' className='pl-5 md:pl-0 flex flex-col items-start gap-3'>
+        <img src='/logo.png' alt='Logo' className='min-w-16 h-20' />
         <span className='text-[#168cec] text-xs font-semibold font-jost flex flex-col'>
           <p>Venta de productos de</p>
           <p className='pl-2'>limpieza profesional</p>
@@ -40,11 +40,11 @@ export const Header = () => {
       >
         <motion.span
           animate={{ rotateZ: toggled ? 45 : 0, y: toggled ? 8 : 0 }}
-          className='block h-0.5 w-8 bg-black'
+          className='block h-0.5 w-8 bg-white'
         />
         <motion.span
           animate={{ width: toggled ? 0 : 24 }}
-          className='block h-0.5 w-6 bg-black'
+          className='block h-0.5 w-6 bg-white'
         />
         <motion.span
           animate={{
@@ -52,7 +52,7 @@ export const Header = () => {
             y: toggled ? -8 : 0,
             width: toggled ? 32 : 16
           }}
-          className='block h-0.5 w-4 bg-black'
+          className='block h-0.5 w-4 bg-white'
         />
       </button>
 
