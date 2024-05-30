@@ -7,7 +7,7 @@ import { storage } from '@/services/config'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { updateProduct } from '../hooks/update-product'
 
 const EditPublication = () => {
@@ -132,10 +132,6 @@ const EditPublication = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <Toaster
-        position='top-center'
-        reverseOrder={false}
-      />
       <form className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-screen border-none rounded-md mt-5' ref={formRef} onSubmit={handleSubmit}>
         <div>
           {

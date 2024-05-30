@@ -3,23 +3,42 @@
 import { CATEGORY } from '@/consts/consts'
 import { Category, createProduct } from '@/consts/types'
 import React, { useRef, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useCreateProduct } from '../../hooks/use-create-product'
 
 export const CreateProductForm = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const { createProduct } = useCreateProduct()
   const [image, setImage] = useState('')
+  const [price, setPrice] = useState('')
+  const [disabled, setDisabled] = useState(false)
+  const [discountPrice, setDiscountPrice] = useState('')
   const [file, setFile] = useState<File | null>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    setDisabled(true)
     if (!formRef.current) return
+    if (!/^\d+(\.\d{1,2})?$/.test(price)) {
+      toast.error('El precio no es correcto')
+      setDisabled(false)
+      return
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(discountPrice)) {
+      toast.error('El precio con descuento no es correcto')
+      setDisabled(false)
+      return
+    }
+    if (discountPrice > price) {
+      toast.error('El precio con descuento no puede ser mayor al precio')
+      setDisabled(false)
+      return
+    }
     const formData = new FormData(formRef.current)
     const product: createProduct = {
       title: formData.get('title') as string,
-      price: Number(formData.get('price')),
-      discountPrice: Number(formData.get('discountPrice')),
+      price: Number(price),
+      discountPrice: Number(discountPrice),
       reference: formData.get('reference') as string,
       stock: Number(formData.get('stock')),
       description: formData.get('description') as string,
@@ -31,6 +50,22 @@ export const CreateProductForm = () => {
       featured: Number(formData.get('featured'))
     }
     createProduct(product)
+    toast.success('Producto creado correctamente')
+    setTimeout(() => {
+      location.reload()
+    }, 2000)
+  }
+
+  const handlePrice = (e: React.ChangeEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>) => {
+    const value = e.target.value
+    const price = value.replace(/[^0-9.]/g, '')
+    const priceWithTwoDecimals = price.split('.')
+    if (priceWithTwoDecimals.length > 1) {
+      if (priceWithTwoDecimals[1].length > 2) {
+        return
+      }
+    }
+    setState(price)
   }
 
   const previewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,10 +81,6 @@ export const CreateProductForm = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <Toaster
-        position='top-center'
-        reverseOrder={false}
-      />
       <form className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-screen border-none rounded-md mt-5' ref={formRef} onSubmit={handleSubmit}>
         <div>
           {
@@ -72,11 +103,11 @@ export const CreateProductForm = () => {
         <div className='flex gap-5 w-full flex-col md:flex-row'>
           <label htmlFor='price' className='w-full text-lg font-bold'>
             Precio
-            <input type='number' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+            <input onChange={(e) => handlePrice(e, setPrice)} type='text' name='price' placeholder='Precio del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' value={price} />
           </label>
           <label htmlFor='discountPrice' className='w-full text-lg font-bold'>
             Precio con descuento
-            <input type='number' name='discountPrice' placeholder='Precio con descuento' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+            <input onChange={(e) => handlePrice(e, setDiscountPrice)} type='text' name='discountPrice' placeholder='Precio con descuento' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' value={discountPrice} />
           </label>
         </div>
         <div className='flex gap-5 w-full flex-col md:flex-row'>
@@ -124,7 +155,7 @@ export const CreateProductForm = () => {
           Descripción
           <textarea rows={10} name='description' placeholder='Descripción del producto' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
         </label>
-        <button type='submit' className='bg-orange-200 rounded-md px-3 py-2  font-bold'>Actualizar producto</button>
+        <button disabled={disabled} type='submit' className='bg-orange-200 rounded-md px-3 py-2 font-bold disabled:bg-gray-400'>Crear Producto</button>
       </form>
     </div>
   )

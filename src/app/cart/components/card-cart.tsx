@@ -52,7 +52,11 @@ export const CardCart = ({ product, setReFetch, setTotal, setAllProducts }: {pro
       const newProduct = {
         id: product.id,
         title: product.title,
-        price: product.discountPrice ? product.discountPrice : product.price,
+        image: product.image.url,
+        description: product.description,
+        price: product.price,
+        discountPrice: product.discountPrice,
+        reference: product.reference,
         quantity: counter
       }
       return [...prev, newProduct]

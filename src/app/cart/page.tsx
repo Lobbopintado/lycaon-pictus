@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 import { CardCart } from './components/card-cart'
 import { useGetProductsOfCart } from './hooks/use-get-products-of-cart'
 
@@ -10,69 +11,107 @@ export default function Cart () {
   const [total, setTotal] = useState(0)
   const [ivaOfTotal, setIvaOfTotal] = useState(0)
   const [allProducts, setAllProducts] = useState([])
+  const formRef = useRef(null)
   const router = useRouter()
 
   useEffect(() => {
     setIvaOfTotal(total - (total / 1.21))
-    const query = new URLSearchParams(window.location.search)
-    if (query.get('success')) {
-      console.log('Order placed! You will receive an email confirmation.')
-    }
-
-    if (query.get('canceled')) {
-      console.log('Order canceled -- continue to shop around and checkout when you’re ready.')
-    }
   }, [total])
 
   const handleClick = async () => {
+    if (!formRef.current) return
+    const formData = new FormData(formRef.current)
+    const client = Object.fromEntries(formData.entries())
+    if (!client.email) {
+      toast.error('Por favor, rellene el campo email')
+      return
+    } else if (!client.name) {
+      toast.error('Por favor, rellene el campo nombre')
+      return
+    } else if (!client.dni) {
+      toast.error('Por favor, rellene el campo DNI/CIF')
+      return
+    } else if (!client.address) {
+      toast.error('Por favor, rellene el campo dirección')
+      return
+    } else if (!client.cp) {
+      toast.error('Por favor, rellene el campo código postal')
+      return
+    } else if (!client.population) {
+      toast.error('Por favor, rellene el campo población')
+      return
+    } else if (!client.city) {
+      toast.error('Por favor, rellene el campo provincia')
+      return
+    } else if (!client.phone) {
+      toast.error('Por favor, rellene el campo teléfono')
+      return
+    } else if (client.phone.toString().length < 9) {
+      toast.error('Por favor, rellene un teléfono válido')
+      return
+    } else if (client.cp.toString().length < 5) {
+      toast.error('Por favor, rellene un código postal válido')
+      return
+    } else if (client.dni.toString().length < 9) {
+      toast.error('Por favor, rellene un DNI/CIF válido')
+      return
+    }
+
     const response = await fetch('/api/checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ products: allProducts })
+      body: JSON.stringify({ products: allProducts, email: client.email })
     })
     const { url } = await response.json()
     if (url) {
-      localStorage.setItem('buy', JSON.stringify(allProducts))
+      localStorage.setItem('sale', JSON.stringify(allProducts))
+      localStorage.setItem('client', JSON.stringify(client))
       router.push(url)
     }
   }
 
   return (
     <section className='py-8 md:py-16 flex flex-col md:flex-row px-10 w-screen gap-10 justify-start items-start'>
-      <form className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-full border-none rounded-md'>
-        <label htmlFor='name' className='w-full text-lg font-bold'>
-          Nombre Completo
-          <input type='text' id='name' name='name' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-        </label>
+      <form ref={formRef} className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-full border-none rounded-md'>
+        <div className='flex gap-5 w-full flex-col md:flex-row'>
+          <label htmlFor='name' className='w-full text-lg font-bold'>
+            Nombre completo o razón social
+            <input type='text' id='name' name='name' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+          </label>
+          <label htmlFor='dni' className='w-full text-lg font-bold'>
+            DNI o CIF
+            <input type='text' id='dni' name='dni' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+          </label>
+        </div>
         <label htmlFor='email' className='w-full text-lg font-bold'>
           Email
           <input type='email' id='email' name='email' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
         </label>
         <div className='flex gap-5 w-full flex-col md:flex-row'>
-          <label htmlFor='reference' className='w-full text-lg font-bold'>
+          <label htmlFor='address' className='w-full text-lg font-bold'>
             Dirección
-            <input type='text' name='address' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+            <input type='text' id='address' name='address' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           </label>
-          <label htmlFor='stock' className='w-full text-lg font-bold'>
+          <label htmlFor='cp' className='w-full text-lg font-bold'>
             Código Postal
-            <input type='number' name='stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+            <input type='number' name='cp' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           </label>
         </div>
         <div className='flex gap-5 w-full flex-col md:flex-row'>
-          <label htmlFor='reference' className='w-full text-lg font-bold'>
+          <label htmlFor='population' className='w-full text-lg font-bold'>
             Población
-            <input type='text' name='reference' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+            <input type='text' name='population' id='population' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           </label>
-          <label htmlFor='stock' className='w-full text-lg font-bold'>
+          <label htmlFor='city' className='w-full text-lg font-bold'>
             Provincia
-            <input type='text' name='city' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+            <input type='text' id='city' name='city' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           </label>
         </div>
-        <label htmlFor='ml' className='w-full text-lg font-bold'>
+        <label htmlFor='phone' className='w-full text-lg font-bold'>
           Teléfono
-          <input type='number' name='ml' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+          <input type='number' name='phone' id='phone' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
         </label>
       </form>
       <div className='w-full md:w-1/2'>

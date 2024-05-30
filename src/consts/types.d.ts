@@ -34,3 +34,21 @@ export type Product = {
   ml:number
   featured: number
 }
+
+export type Sale = {
+  name: string
+  dni: string
+  email: string
+  address: string
+  stock: number
+}
+
+export type Client = {
+  name: string
+  email: string
+  phone: number
+  address: string
+  city: string
+  population: string
+  dni: string
+}
