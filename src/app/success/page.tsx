@@ -4,15 +4,17 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { SuccessSvg } from './components/success-svg'
 import { useSetSale } from './hooks/use-set-sale'
+import { useGetRef } from './hooks/use-get-total-of-sales'
 
 export default function Success () {
+  const { ref } = useGetRef()
   const { setSale } = useSetSale()
   const router = useRouter()
   useEffect(() => {
     const sale = localStorage.getItem('sale')
     const client = localStorage.getItem('client')
     if (sale && client) {
-      setSale(JSON.parse(sale), JSON.parse(client))
+      setSale(JSON.parse(sale), JSON.parse(client), ref)
       localStorage.removeItem('sale')
       localStorage.removeItem('client')
       localStorage.removeItem('cart')

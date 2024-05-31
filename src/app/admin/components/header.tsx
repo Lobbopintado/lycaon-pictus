@@ -18,8 +18,8 @@ export const Header = ({ setIsOpen, isOpen }: HeaderProps) => {
               Crear producto
             </button>
           </li>
-          <li className={`${isOpen === 'ventas' && 'text-white '} rounded-full p-1`}>
-            <button onClick={() => setIsOpen('ventas')}>
+          <li className={`${isOpen === 'sales' && 'text-white '} rounded-full p-1`}>
+            <button onClick={() => setIsOpen('sales')}>
               Ventas
             </button>
           </li>
