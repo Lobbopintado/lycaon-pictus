@@ -4,17 +4,17 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { SuccessSvg } from './components/success-svg'
 import { useSetSale } from './hooks/use-set-sale'
-import { useGetRef } from './hooks/use-get-total-of-sales'
+import toast from 'react-hot-toast'
 
 export default function Success () {
-  const { ref } = useGetRef()
   const { setSale } = useSetSale()
   const router = useRouter()
   useEffect(() => {
     const sale = localStorage.getItem('sale')
     const client = localStorage.getItem('client')
-    if (sale && client) {
-      setSale(JSON.parse(sale), JSON.parse(client), ref)
+    const total = localStorage.getItem('total')
+    if (sale && client && total) {
+      setSale(JSON.parse(sale), JSON.parse(client), total)
       localStorage.removeItem('sale')
       localStorage.removeItem('client')
       localStorage.removeItem('cart')
@@ -22,7 +22,10 @@ export default function Success () {
         router.push('/')
       }, 5000)
     } else {
-      router.push('/')
+      toast.error('No se ha podido realizar la compra')
+      setTimeout(() => {
+        router.push('/')
+      }, 2000)
     }
   }, [])
   return (

@@ -29,8 +29,8 @@ export const CreateProductForm = () => {
       setDisabled(false)
       return
     }
-    if (discountPrice > price) {
-      toast.error('El precio con descuento no puede ser mayor al precio')
+    if ((Number(discountPrice) * 100) >= (Number(price) * 100)) {
+      toast.error('El precio con descuento no puede ser mayor o igual al precio')
       setDisabled(false)
       return
     }

@@ -68,6 +68,7 @@ export default function Cart () {
     if (url) {
       localStorage.setItem('sale', JSON.stringify(allProducts))
       localStorage.setItem('client', JSON.stringify(client))
+      localStorage.setItem('total', JSON.stringify(total))
       router.push(url)
     }
   }
