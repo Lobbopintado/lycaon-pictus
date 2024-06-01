@@ -19,10 +19,10 @@ export const Sales = () => {
             <li className='grid grid-cols-4 gap-3 bg-white text-black p-3 place-items-center'>
               <h3>{sale.ref}</h3>
               <h3 className='text-sm'>{sale.date.toDate().toLocaleDateString()}</h3>
-              <button className='bg-sky-400 p-1 rounded-md text-white' onClick={() => setIsOpened(sale.client.address)}>
+              <button className='bg-[#168cec] p-1 rounded-md text-white' onClick={() => setIsOpened(sale.client.address)}>
                 Cliente
               </button>
-              <button className='bg-sky-400 p-1 rounded-md text-white' onClick={() => setIsOpened(sale.ref.toString())}>
+              <button className='bg-[#168cec] p-1 rounded-md text-white' onClick={() => setIsOpened(sale.ref.toString())}>
                 Artículos
               </button>
             </li>
