@@ -9,7 +9,7 @@ export default function Contacto () {
       <div className='absolute -bottom-6 -right-0 w-24 h-20 rounded-tl-[40px] bg-blue-300' />
       <div className='grid md:grid-cols-2'>
         <div className='text-center p-6 xl:p-10 flex flex-col items-center justify-center'>
-          <h2 className='text-3xl text-blue-500 font-bold'>Contact Us</h2>
+          <h2 className='text-3xl text-blue-500 font-bold'>Contáctanos</h2>
           <img src='https://readymadeui.com/contact.webp' className='mt-4 shrink-0 w-full' />
         </div>
         <form className='p-6 xl:p-10'>
