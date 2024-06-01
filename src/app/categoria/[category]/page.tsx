@@ -1,4 +1,5 @@
 'use client'
+import { CategoryProducts } from '@/components/category-products'
 import { NavCategory } from '@/components/nav-category'
 import { useParams } from 'next/navigation'
 
@@ -7,7 +8,7 @@ export default function CategoryPage () {
   return (
     <main className='flex flex-col items-center justify-between'>
       <NavCategory />
-      {category}
+      <CategoryProducts category={category} />
     </main>
   )
 }

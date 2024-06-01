@@ -33,7 +33,7 @@ export default function RootLayout ({
         <Header />
         <CartProvider>
           <CartButton />
-          <div className='min-h-screen'>
+          <div className='min-h-[403px]'>
             {children}
           </div>
         </CartProvider>

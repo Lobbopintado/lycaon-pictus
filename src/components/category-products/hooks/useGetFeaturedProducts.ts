@@ -3,13 +3,13 @@ import { db } from '@/services/config'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
-export const useGetFeaturedProducts = () => {
+export const useGetFeaturedProducts = (category: string) => {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
-      const q = query(collection(db, 'Products'), where('featured', '==', 1))
+      const q = query(collection(db, 'Products'), where('category', '==', category))
       const querySnapshot = await getDocs(q)
       if (querySnapshot.empty) {
         setLoading(false)

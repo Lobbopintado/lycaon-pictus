@@ -36,10 +36,10 @@ export const Card = ({ product }: ProductProps) => {
   }, [product.id, cart, setCart])
 
   return (
-    <div className='bg-white shadow-md rounded-md w-40 overflow-hidden flex flex-col justify-between'>
+    <div className='bg-white shadow-md rounded-md w-40 md:w-52 overflow-hidden flex flex-col justify-between'>
       <Link href={`productos/${id}`} className='h-full flex flex-col justify-between'>
-        <img src={product.image.url} width={160} height={160} alt={product.image.name} className='size-40 object-cover' />
-        <div className='px-3 flex h-28 justify-between flex-col'>
+        <img src={product.image.url} width={160} height={160} alt={product.image.name} className='size-40 md:size-52 object-cover' />
+        <div className='p-3 flex h-28 justify-between flex-col'>
           <div className='flex gap-2'>
             {product.discountPrice > 0 && <p className='text-gray-500 font-bold'>{product.discountPrice}€</p>}
             <p className={`text-gray-500 ${product.discountPrice && 'line-through'}`}>{product.price}€</p>
