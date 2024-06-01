@@ -2,9 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { SuccessSvg } from './components/success-svg'
 import { useSetSale } from './hooks/use-set-sale'
-import toast from 'react-hot-toast'
 
 export default function Success () {
   const { setSale } = useSetSale()
@@ -27,6 +27,7 @@ export default function Success () {
         router.push('/')
       }, 2000)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <section className='flex justify-center items-center mt-10 p-5'>
