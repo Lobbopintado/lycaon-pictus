@@ -1,15 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
-import { Transfer } from '@/components/transfer'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CardCart } from './components/card-cart'
+import { Transfer } from './components/transfer'
 import { useGetProductsOfCart } from './hooks/use-get-products-of-cart'
 
 export default function Cart () {
   const { products, setReFetch } = useGetProductsOfCart()
   const [total, setTotal] = useState(0)
+  const [email, setEmail] = useState('')
+  const [transfer, setTransfer] = useState(false)
   const [ivaOfTotal, setIvaOfTotal] = useState(0)
   const [allProducts, setAllProducts] = useState([])
   const formRef = useRef(null)
@@ -19,7 +21,7 @@ export default function Cart () {
     setIvaOfTotal(total - (total / 1.21))
   }, [total])
 
-  const handleClick = async () => {
+  const handleClick = async (method: string) => {
     if (!formRef.current) return
     const formData = new FormData(formRef.current)
     const client = Object.fromEntries(formData.entries())
@@ -58,24 +60,32 @@ export default function Cart () {
       return
     }
 
-    const response = await fetch('/api/checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ products: allProducts, email: client.email })
-    })
-    const { url } = await response.json()
-    if (url) {
-      localStorage.setItem('sale', JSON.stringify(allProducts))
-      localStorage.setItem('client', JSON.stringify(client))
-      localStorage.setItem('total', JSON.stringify(total))
-      router.push(url)
+    if (method === 'card') {
+      const response = await fetch('/api/checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ products: allProducts, email: client.email })
+      })
+      const { url } = await response.json()
+      if (url) {
+        localStorage.setItem('sale', JSON.stringify(allProducts))
+        localStorage.setItem('client', JSON.stringify(client))
+        localStorage.setItem('total', JSON.stringify(total))
+        router.push(url)
+      }
+    } else {
+      setTransfer(true)
+      setTimeout(() => {
+        router.push('/')
+      }, 5000)
     }
   }
 
   return (
     <section className='py-8 md:py-16 flex flex-col md:flex-row px-10 w-full gap-10 justify-start items-start'>
+      <Transfer email={email} transfer={transfer} />
       <form ref={formRef} className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-full border-none rounded-md'>
         <div className='flex gap-5 w-full flex-col md:flex-row'>
           <label htmlFor='name' className='w-full text-lg font-bold'>
@@ -89,7 +99,7 @@ export default function Cart () {
         </div>
         <label htmlFor='email' className='w-full text-lg font-bold'>
           Email
-          <input type='email' id='email' name='email' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
+          <input onChange={(e) => setEmail(e.target.value)} type='email' id='email' name='email' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
         </label>
         <div className='flex gap-5 w-full flex-col md:flex-row'>
           <label htmlFor='address' className='w-full text-lg font-bold'>
@@ -147,8 +157,10 @@ export default function Cart () {
                   <dd className='text-base font-bold text-gray-900'>{total.toFixed(2)}€</dd>
                 </dl>
               </div>
-              <button onClick={handleClick} className='flex w-full items-center justify-center rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-green-700'>Pagar por tarjeta o PayPal</button>
-              <Transfer />
+              <div className='flex gap-5'>
+                <button onClick={() => handleClick('card')} className='flex w-full items-center justify-center rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-green-700'>Pagar por tarjeta o PayPal</button>
+                <button onClick={() => handleClick('transfer')} className='flex w-full items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-blue-700'>Pagar por transferencia</button>
+              </div>
               <div className='flex items-center justify-center gap-2'>
                 <span className='text-sm font-normal text-gray-500'> o </span>
                 <a href='/' title='' className='inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline'>
