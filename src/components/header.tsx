@@ -12,8 +12,8 @@ export const Header = () => {
       <img src='/header.jpg' alt='fondo' className='block md:hidden w-full h-full absolute top-0 object-cover z-[-1]' />
       <img src='/header.jfif' alt='fondo' className='hidden w-full h-full absolute top-0 object-fill z-[-1] md:block' />
       <a href='/' className='pl-5 md:pl-0 flex flex-col items-start gap-3'>
-        <img src='/logo.png' alt='Logo' className='min-w-16 h-20' />
-        <span className='text-[#168cec] text-xs font-bold font-jost flex flex-col'>
+        <img src='/logo.png' alt='Logo' className='w-16 h-20 md:w-24 md:h-28' />
+        <span className='text-[#168cec] text-xs md:text-base font-bold font-jost flex flex-col'>
           <p>Venta de productos de</p>
           <p className='pl-2'>limpieza profesional</p>
         </span>
