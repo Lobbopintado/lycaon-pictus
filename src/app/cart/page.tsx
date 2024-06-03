@@ -75,7 +75,35 @@ export default function Cart () {
         localStorage.setItem('total', JSON.stringify(total))
         router.push(url)
       }
-    } else {
+    }
+    if (method === 'transfer') {
+      const params = {
+        user_id: 'gfUinPmHvG8mLZfcH',
+        service_id: 'service_euxxv06',
+        template_id: 'template_0ayugek',
+        template_params: {
+          name: client.name,
+          products: allProducts,
+          total: total.toFixed(2)
+        }
+      }
+      const headers = {
+        'Content-type': 'application/json'
+      }
+      const options = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(params)
+      }
+
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', options)
+      const data = await response.json()
+      if (data.status === 200) {
+        toast.success('Email enviado correctamente')
+      } else {
+        toast.error('Error al enviar el email')
+      }
+      localStorage.removeItem('cart')
       setTransfer(true)
       setTimeout(() => {
         router.push('/')
