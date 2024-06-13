@@ -13,7 +13,7 @@ export const Sales = () => {
   const saleFilterByMethod = clientMethod ? saleFilterByName?.filter((sale) => sale.method === clientMethod) : saleFilterByName
   return (
     <div className='flex justify-center items-center flex-col'>
-      <div className='flex gap-5 mb-5'>
+      <div className='flex flex-col md:flex-row gap-5 mb-5'>
         <label>
           <input
             type='text'
