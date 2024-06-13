@@ -40,7 +40,6 @@ export const CreateProductForm = () => {
       price: Number(price),
       discountPrice: Number(discountPrice),
       reference: formData.get('reference') as string,
-      stock: Number(formData.get('stock')),
       description: formData.get('description') as string,
       image: file as File,
       createdAt: new Date(),
@@ -114,10 +113,6 @@ export const CreateProductForm = () => {
           <label htmlFor='reference' className='w-full text-lg font-bold'>
             Referencia
             <input type='text' name='reference' placeholder='Referencia' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-          </label>
-          <label htmlFor='stock' className='w-full text-lg font-bold'>
-            Stock
-            <input type='number' name='stock' placeholder='Stock' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           </label>
         </div>
         <label htmlFor='ml' className='w-full text-lg font-bold'>

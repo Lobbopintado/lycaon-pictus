@@ -12,7 +12,6 @@ export const updateProduct = async (product: Product, id: string) => {
     },
     price: product.price,
     description: product.description,
-    stock: product.stock,
     discountPrice: product.discountPrice,
     reference: product.reference,
     createdAt: product.createdAt,

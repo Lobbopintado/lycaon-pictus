@@ -43,7 +43,6 @@ export const useCreateProduct = () => {
             },
             price: product.price,
             description: product.description,
-            stock: product.stock,
             discountPrice: product.discountPrice,
             reference: product.reference,
             createdAt: product.createdAt,

@@ -14,7 +14,7 @@ export default function Success () {
     const client = localStorage.getItem('client')
     const total = localStorage.getItem('total')
     if (sale && client && total) {
-      setSale(JSON.parse(sale), JSON.parse(client), total)
+      setSale(JSON.parse(sale), JSON.parse(client), total, 'Tarjeta')
       localStorage.removeItem('sale')
       localStorage.removeItem('client')
       localStorage.removeItem('cart')

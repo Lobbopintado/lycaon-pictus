@@ -3,7 +3,9 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSetSale } from '../success/hooks/use-set-sale'
 import { CardCart } from './components/card-cart'
+import { CashOnDelivery } from './components/cash-on-delivery'
 import { Transfer } from './components/transfer'
 import { useGetProductsOfCart } from './hooks/use-get-products-of-cart'
 
@@ -12,8 +14,10 @@ export default function Cart () {
   const [total, setTotal] = useState(0)
   const [email, setEmail] = useState('')
   const [transfer, setTransfer] = useState(false)
+  const { setSale } = useSetSale()
+  const [cashOnDelivery, setCashOnDelivery] = useState(false)
   const [ivaOfTotal, setIvaOfTotal] = useState(0)
-  const [allProducts, setAllProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([] as any)
   const formRef = useRef(null)
   const router = useRouter()
 
@@ -30,9 +34,6 @@ export default function Cart () {
       return
     } else if (!client.name) {
       toast.error('Por favor, rellene el campo nombre')
-      return
-    } else if (!client.dni) {
-      toast.error('Por favor, rellene el campo DNI/CIF')
       return
     } else if (!client.address) {
       toast.error('Por favor, rellene el campo dirección')
@@ -55,9 +56,6 @@ export default function Cart () {
     } else if (client.cp.toString().length < 5) {
       toast.error('Por favor, rellene un código postal válido')
       return
-    } else if (client.dni.toString().length < 9) {
-      toast.error('Por favor, rellene un DNI/CIF válido')
-      return
     }
 
     if (method === 'card') {
@@ -77,14 +75,16 @@ export default function Cart () {
       }
     }
     if (method === 'transfer') {
+      if (!allProducts) return
       const params = {
-        user_id: 'gfUinPmHvG8mLZfcH',
-        service_id: 'service_euxxv06',
-        template_id: 'template_0ayugek',
+        user_id: 'CFTvURdi9kuOO_Odu',
+        service_id: 'service_hwvz4ni',
+        template_id: 'template_9vsenag',
         template_params: {
           name: client.name,
-          products: allProducts,
-          total: total.toFixed(2)
+          total: total.toFixed(2),
+          products: allProducts.map((product: any) => `${product.title} - ${product.price}€`).join(', '),
+          email
         }
       }
       const headers = {
@@ -96,15 +96,66 @@ export default function Cart () {
         body: JSON.stringify(params)
       }
 
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', options)
-      const data = await response.json()
-      if (data.status === 200) {
-        toast.success('Email enviado correctamente')
-      } else {
-        toast.error('Error al enviar el email')
+      fetch('https://api.emailjs.com/api/v1.0/email/send', options)
+        .then((response) => {
+          if (response.ok) {
+            toast.success('Email enviado correctamente')
+            setSale(allProducts, client as any, String(total), 'Transferencia')
+            localStorage.removeItem('cart')
+            setTransfer(true)
+            setTimeout(() => {
+              router.push('/')
+            }, 5000)
+          } else {
+            return response.text().then((text) => Promise.reject(text))
+          }
+        })
+        .catch(() => {
+          toast.error('Ha ocurrido un error')
+        })
+    }
+    if (method === 'cashOnDelivery') {
+      if (!allProducts) return
+      const params = {
+        user_id: 'CFTvURdi9kuOO_Odu',
+        service_id: 'service_hwvz4ni',
+        template_id: 'template_72l610o',
+        template_params: {
+          name: client.name,
+          total: total.toFixed(2),
+          products: allProducts.map((product: any) => `${product.title} - ${product.price}€`).join(', '),
+          email
+        }
       }
+      const headers = {
+        'Content-type': 'application/json'
+      }
+      const options = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(params)
+      }
+
+      fetch('https://api.emailjs.com/api/v1.0/email/send', options)
+        .then((response) => {
+          if (response.ok) {
+            toast.success('Email enviado correctamente')
+            setSale(allProducts, client as any, String(total), 'Transferencia')
+            localStorage.removeItem('cart')
+            setTransfer(true)
+            setTimeout(() => {
+              router.push('/')
+            }, 5000)
+          } else {
+            return response.text().then((text) => Promise.reject(text))
+          }
+        })
+        .catch(() => {
+          toast.error('Ha ocurrido un error')
+        })
+      setSale(allProducts, client as any, String(total), 'Contrareembolso')
+      setCashOnDelivery(true)
       localStorage.removeItem('cart')
-      setTransfer(true)
       setTimeout(() => {
         router.push('/')
       }, 5000)
@@ -114,15 +165,12 @@ export default function Cart () {
   return (
     <section className='py-8 md:py-16 flex flex-col md:flex-row px-10 w-full gap-10 justify-start items-start'>
       <Transfer email={email} transfer={transfer} />
+      <CashOnDelivery cashOnDelivery={cashOnDelivery} />
       <form ref={formRef} className='flex flex-col gap-5 p-5 justify-center items-center border md:border-solid border-gray-200 md:shadow-lg md:w-1/2 w-full border-none rounded-md'>
         <div className='flex gap-5 w-full flex-col md:flex-row'>
           <label htmlFor='name' className='w-full text-lg font-bold'>
             Nombre completo o razón social
             <input type='text' id='name' name='name' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
-          </label>
-          <label htmlFor='dni' className='w-full text-lg font-bold'>
-            DNI o CIF
-            <input type='text' id='dni' name='dni' className='p-2 border border-solid border-gray-200 rounded-md shadow-lg w-full' />
           </label>
         </div>
         <label htmlFor='email' className='w-full text-lg font-bold'>
@@ -176,6 +224,11 @@ export default function Cart () {
                     <dd className='text-base font-medium text-gray-900'>{(total - ivaOfTotal).toFixed(2)}€</dd>
                   </dl>
                   <dl className='flex items-center justify-between gap-4'>
+                    <dt className='text-base font-normal text-gray-500'>Envío
+                    </dt>
+                    <dd className='text-base font-bold text-gray-900'>Gratis</dd>
+                  </dl>
+                  <dl className='flex items-center justify-between gap-4'>
                     <dt className='text-base font-normal text-gray-500'>IVA (21%)</dt>
                     <dd className='text-base font-medium text-gray-900'>{ivaOfTotal.toFixed(2)}€</dd>
                   </dl>
@@ -185,9 +238,10 @@ export default function Cart () {
                   <dd className='text-base font-bold text-gray-900'>{total.toFixed(2)}€</dd>
                 </dl>
               </div>
-              <div className='flex gap-5'>
-                <button onClick={() => handleClick('card')} className='flex w-full items-center justify-center rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-green-700'>Pagar por tarjeta o PayPal</button>
-                <button onClick={() => handleClick('transfer')} className='flex w-full items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-blue-700'>Pagar por transferencia</button>
+              <div className='flex flex-col gap-5 items-center w-full'>
+                <button onClick={() => handleClick('card')} className='flex w-full md:w-1/2 items-center justify-center rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-green-700'>Pagar por tarjeta o PayPal</button>
+                <button onClick={() => handleClick('transfer')} className='flex w-full md:w-1/2 items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-blue-700'>Pagar por transferencia o Bizum</button>
+                <button onClick={() => handleClick('cashOnDelivery')} className='flex w-full md:w-1/2 items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-blue-700'>Pagar por contrareembolso</button>
               </div>
               <div className='flex items-center justify-center gap-2'>
                 <span className='text-sm font-normal text-gray-500'> o </span>

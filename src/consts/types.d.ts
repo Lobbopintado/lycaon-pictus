@@ -8,7 +8,6 @@ export type createProduct = {
     price: number
     description: string
     id?: string
-    stock: number
     discountPrice: number
     reference: string
     createdAt: Date
@@ -27,7 +26,6 @@ export type Product = {
   price: number
   description: string
   id?: string
-  stock: number
   discountPrice: number
   reference: string
   createdAt: Date
@@ -43,7 +41,6 @@ export type Sale = [
     price: number
     discountPrice: number
     reference: string
-    stock: number
     image: string
     id: string
     title: string
@@ -58,7 +55,6 @@ export type Client = {
   address: string
   city: string
   population: string
-  dni: string
   cp: number
 }
 
@@ -69,4 +65,5 @@ export type Sales = {
   date: Timestamp
   id: string
   total: string
+  method: string
 }
