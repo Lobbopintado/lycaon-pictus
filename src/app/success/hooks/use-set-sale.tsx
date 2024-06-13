@@ -5,7 +5,7 @@ import { addDoc, collection, doc, getDoc, increment, updateDoc } from 'firebase/
 
 export const useSetSale = () => {
   const setSale = async (sale: Sale, client: Client, total: string, method: string) => {
-    const docRef = doc(db, 'Ref', 'GyzYMIKayrkHoVXsnG0P')
+    const docRef = doc(db, 'Ref', 'gjxdy2ehSlmOJZPe5zpU')
     await updateDoc(docRef, {
       ref: increment(1)
     })

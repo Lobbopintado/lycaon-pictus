@@ -4,12 +4,12 @@ import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 const firebaseConfig = {
-  apiKey: 'AIzaSyAyHryBtGhVUz9X4NmgD1DYrdunonEN0D4',
-  authDomain: 'limpieza-83abd.firebaseapp.com',
-  projectId: 'limpieza-83abd',
-  storageBucket: 'limpieza-83abd.appspot.com',
-  messagingSenderId: '69913813678',
-  appId: '1:69913813678:web:5ff5c7a68e7606b2de833f'
+  apiKey: 'AIzaSyDe-Jxerv9NGDnuEAfK5MCnjUxMONM6Tjg',
+  authDomain: 'lycaon-pictus.firebaseapp.com',
+  projectId: 'lycaon-pictus',
+  storageBucket: 'lycaon-pictus.appspot.com',
+  messagingSenderId: '416390561680',
+  appId: '1:416390561680:web:9e4ba378a0082a35c37d15'
 }
 export const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
