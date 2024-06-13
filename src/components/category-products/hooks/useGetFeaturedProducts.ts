@@ -22,7 +22,7 @@ export const useGetFeaturedProducts = (category: string) => {
       setProducts(ArrProducts)
       setLoading(false)
     })()
-  }, [])
+  }, [category])
 
   return { products, loading }
 }
