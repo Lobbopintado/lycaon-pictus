@@ -2,7 +2,7 @@
 export default function Nosotros () {
   return (
     <section className='flex justify-center items-center'>
-      <article className='flex flex-col-reverse md:flex-row mt-10 gap-5 md:gap-10 md:w-2/3 w-full p-5 bg-white shadow-md border border-gray-200 border-solid rounded-md'>
+      <article className='flex flex-col md:flex-row mt-10 gap-5 md:gap-10 md:w-2/3 w-full p-5 bg-white shadow-md border border-gray-200 border-solid rounded-md'>
         <div className='flex flex-col gap-4'>
           <p>
             ¡Bienvenido a nuestra tienda!

@@ -14,9 +14,9 @@ export const Header = () => {
     <header className='relative w-full xl:px-0 m-auto py-5 flex justify-between md:justify-around items-center md:shadow-md'>
       <img src='/header.jpg' alt='fondo' className='block md:hidden w-full h-full absolute top-0 object-cover z-[-1]' />
       <img src='/header.jfif' alt='fondo' className='hidden w-full h-full absolute top-0 object-fill z-[-1] md:block' />
-      <a href='/' className={`pl-5 md:pl-0 flex flex-col items-start gap-3 ${inter.className}`}>
-        <img src='/logo.png' alt='Logo' className='w-16 h-20 md:w-24 md:h-28' />
-        <span className='text-[#168cec] font-bold font-jost flex flex-col'>
+      <a href='/' className={`pt-8 pl-5 md:pl-0 flex flex-col items-start gap-3 ${inter.className}`}>
+        <img src='/logo.png' alt='Logo' className='w-20 h-24 md:w-24 md:h-28' />
+        <span className='text-[#168cec] font-bold font-jost flex flex-col pt-3'>
           <p>Venta de productos de</p>
           <p className='pl-3'>limpieza profesional</p>
         </span>
