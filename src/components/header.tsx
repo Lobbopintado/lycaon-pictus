@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import { motion } from 'framer-motion'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import { useState } from 'react'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Poppins({ weight: '800', subsets: ['latin'] })
 
 export const Header = () => {
   const [toggled, setToggled] = useState(false)
@@ -16,9 +16,9 @@ export const Header = () => {
       <img src='/header.jfif' alt='fondo' className='hidden w-full h-full absolute top-0 object-fill z-[-1] md:block' />
       <a href='/' className={`pl-5 md:pl-0 flex flex-col items-start gap-3 ${inter.className}`}>
         <img src='/logo.png' alt='Logo' className='w-16 h-20 md:w-24 md:h-28' />
-        <span className='text-[#168cec] text-xs md:text-base font-bold font-jost flex flex-col'>
+        <span className='text-[#168cec] font-bold font-jost flex flex-col'>
           <p>Venta de productos de</p>
-          <p>limpieza profesional</p>
+          <p className='pl-3'>limpieza profesional</p>
         </span>
       </a>
 

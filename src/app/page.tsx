@@ -11,6 +11,9 @@ export default function Home () {
     <main className='flex flex-col items-center gap-5 md:gap-24'>
       <NavCategory />
       <FeatureCategory />
+      <p className='text-red-500 px-5 font-semibold'>
+        Uso exclusivo y obligatorio para equipos de limpieza
+      </p>
       <div className='flex flex-col  gap-5 p-5 bg-white shadow-md border border-gray-200 border-solid rounded-md'>
         <p className='text-center font-bold'>Envíos solo en España</p>
         <p>Tienes dudas, necesitas más información o quieres un trato más personalizado

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import { CATEGORY } from '@/consts/consts'
 import { motion } from 'framer-motion'
@@ -11,6 +12,7 @@ export const NavCategory = () => {
   return (
     <>
       <ul className='hidden p-5 flex-wrap gap-1 justify-between w-screen md:w-2/3 md:flex'>
+        <img src='/danger.png' alt='Señal de peligro' className='size-10' />
         {
         CATEGORY.map((cat) => (
           <li key={cat.name} className='p-2'>
@@ -20,8 +22,10 @@ export const NavCategory = () => {
           </li>
         ))
       }
+        <img src='/spain.png' alt='bandera de españa' className='h-8 w-10' />
       </ul>
-      <div className='flex md:hidden justify-end w-full'>
+      <div className='flex md:hidden justify-center gap-5 items-center px-14 w-full'>
+        <img src='/danger.png' alt='Señal de peligro' className='size-10' />
         <button
           onClick={() => setToggled(!toggled)}
           className='flex justify-center items-center gap-2 cursor-pointer p-5 text-right w-full text-blue-500 font-semibold'
@@ -29,6 +33,7 @@ export const NavCategory = () => {
           <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className='font-bold'><path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M4 6l16 0' /><path d='M4 12l16 0' /><path d='M4 18l16 0' /></svg>
           Categorías
         </button>
+        <img src='/spain.png' alt='bandera de españa' className='h-8 w-10' />
       </div>
 
       {toggled && (
