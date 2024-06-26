@@ -32,9 +32,6 @@ export const Header = () => {
         <a href='/contacto' className={linkStyle}>
           Contacto
         </a>
-        <a href='/admin' className={linkStyle}>
-          Admin
-        </a>
       </nav>
 
       <button
@@ -73,9 +70,6 @@ export const Header = () => {
           </a>
           <a href='/contacto' className={linkStyle}>
             Contacto
-          </a>
-          <a href='/admin' className={linkStyle}>
-            Admin
           </a>
         </motion.nav>
       )}
