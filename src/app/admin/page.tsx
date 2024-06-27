@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CreateProduct } from './components/create-product'
 import { Header } from './components/header'
 import { Products } from './components/products'
@@ -7,8 +7,12 @@ import { Sales } from './components/sales'
 
 export default function Admin () {
   const [isOpen, setIsOpen] = useState('products')
+  const [password, setPassword] = useState('')
+  useEffect(() => {
+    setPassword(prompt('Introduce la contraseña') as string)
+  }, [])
 
-  if (prompt('Introduce la contraseña') !== 'lobbopintado') {
+  if (password !== 'lobbopintado') {
     return null
   }
   return (
