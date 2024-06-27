@@ -7,6 +7,10 @@ import { Sales } from './components/sales'
 
 export default function Admin () {
   const [isOpen, setIsOpen] = useState('products')
+
+  if (prompt('Introduce la contraseña') !== 'lobbopintado') {
+    return null
+  }
   return (
     <div>
       <Header setIsOpen={setIsOpen} isOpen={isOpen} />
