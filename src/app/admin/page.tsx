@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CreateProduct } from './components/create-product'
 import { Header } from './components/header'
 import { Products } from './components/products'
