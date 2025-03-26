@@ -22,7 +22,7 @@ export default function Home () {
           ¡puedes hacer tu pedido por WhatsApp!
         </p>
         <div className='flex gap-3 justify-center items-center'>
-          <Link href='https://wa.me/+34684738607' className='flex gap-3 justify-center items-center p-3 border rounded-md border-green-500 w-40'>
+          <Link href='https://wa.me/+34611072714' className='flex gap-3 justify-center items-center p-3 border rounded-md border-green-500 w-40'>
             Contactar
             <img className='size-8' src='/whatsapp-logo.png' alt='logo de whatsapp' />
           </Link>

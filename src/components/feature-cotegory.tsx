@@ -16,12 +16,6 @@ export const FeatureCategory = () => {
           <h3 className='w-full text-center p-2 text-black font-bold'>Multi remover</h3>
         </Link>
       </li>
-      <li className='md:w-[30%] w-3/4'>
-        <Link href='/poppers' className='flex flex-col'>
-          <img src='/products/poppers.jpeg' alt='Butadeniol' className='size-full object-contain md:size-96' />
-          <h3 className='text-sm w-full text-center p-2 text-black font-bold'>Poppers (Pentilo, Amilo, Propilo y Mixtos)</h3>
-        </Link>
-      </li>
     </ul>
   )
 }

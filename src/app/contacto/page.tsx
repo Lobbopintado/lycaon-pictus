@@ -14,7 +14,7 @@ export default function Contacto () {
       <div className='grid md:grid-cols-3 p-10 place-items-center'>
         <section className='flex gap-3 flex-col justify-center items-center'>
           Por WhatsApp
-          <Link href='https://wa.me/+34684738607'>
+          <Link href='https://wa.me/+34611072714'>
             <img
               src='/whatsapp-logo.png'
               alt='Whatsapp'
